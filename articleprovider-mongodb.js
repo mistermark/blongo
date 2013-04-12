@@ -6,7 +6,7 @@ var Db = require('mongodb').Db
   , ObjectID = require('mongodb').ObjectID;
 
 ArticleProvider = function(host, port) {
-  this.db = new Db('mongoblog', new Server(host, port, { auto_reconnect: true }), { safe: true });
+  this.db = new Db('blongo-blog', new Server(host, port, { auto_reconnect: true }), { safe: true });
   this.db.open(function(){});
 };
 
