@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  #articles
+    - each article in locals.articles
+      div.article
+        h2.title
+          a(href="/blog/"+article._id)!= article.title
+        div.created_at= article.created_at
+        div.content
+          p= article.content

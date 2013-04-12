@@ -1,0 +1,10 @@
+doctype 5
+html
+  head
+    title= locals.title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    header
+      h1.logo= locals.title
+    div.main
+        block content
