@@ -7,7 +7,9 @@ var Db = require('mongodb').Db
 
 ArticleProvider = function(host, port) {
   this.db = new Db('blongo-blog', new Server(host, port, { auto_reconnect: true }), { safe: true });
-  this.db.open(function(){});
+  this.db.open(function(){
+    console.log('>> Access to mongodb open');
+  });
 };
 
 ArticleProvider.prototype.getCollection = function(callback) {
@@ -21,9 +23,13 @@ ArticleProvider.prototype.findAll = function(callback) {
   this.getCollection(function(error, article_collection) {
     if(error) callback(error)
     else {
+      
       article_collection.find().toArray(function(error, results) {
         if(error) callback(error)
-        else callback(null, results)
+        else {
+          //- console.log(results);
+          callback(null, results)
+        }
       })
     }
   })
@@ -33,6 +39,7 @@ ArticleProvider.prototype.findById = function(id, callback) {
   this.getCollection(function(error, article_collection) {
     if(error) callback(error)
     else {
+      console.log("ArticleProvider.prototype.findById");
       article_collection.findOne({
         _id: article_collection.db.bson_serializer.ObjectId.createFromHexString(id)
       },
@@ -48,6 +55,7 @@ ArticleProvider.prototype.save = function(articles, callback) {
   this.getCollection(function(error, article_collection){
     if(error) callback(error)
     else {
+      console.log("ArticleProvider.prototype.save");
       if(typeof(articles.length) == "undefined")
         articles = [articles];
       for( var i=0; i<articles.length; i++) {
